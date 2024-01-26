@@ -29,9 +29,21 @@ const LoginPage = () =>
 {
   const navigate = useNavigate();
 
-  const handleFormSubmit = () =>
+  const handleFormSubmit = async (values , onSubitProps) =>
   {
+    const savedUserResponse = await fetch(
+      'http://localhost:8080/auth/login',
+      {
+        method : "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(values)
+      }
+    );
 
+    const savedUser = await savedUserResponse.json();
+
+    navigate('/');
+    onSubitProps.resetForm();
   }
 
   return (
