@@ -1,8 +1,126 @@
 import React from 'react'
+import * as yup from "yup";
+import 
+{
+  Box,
+  Button,
+  TextField,
+  useMediaQuery,
+  Typography
+} from "@mui/material";
+import { useNavigate } from 'react-router-dom';
+import { Formik } from 'formik';
 
-const LoginPage = () => {
+
+const loginSchema = yup.object().shape(
+  {
+    email : yup.string().email("invalid Email").required("required"),
+    password : yup.string().required("required"),
+  }
+);
+
+const initialValueLogin = 
+{
+  email : "",
+  password : "",
+}
+
+const LoginPage = () => 
+{
+  const navigate = useNavigate();
+
+  const handleFormSubmit = () =>
+  {
+
+  }
+
   return (
-    <div>LoginPage</div>
+    <Formik
+      onSubmit={handleFormSubmit}
+      initialValues={initialValueLogin}
+      validationSchema={loginSchema}
+    >
+      {
+        ({
+          values,
+          errors,
+          touched,
+          handleblur,
+          handleChange,
+          handleSubmit
+        }) => 
+
+        (
+          <div 
+            style=
+            {{
+              height : '100vh',
+              width : '100vw',
+              display : 'flex',
+              alignItems : 'center',
+              justifyContent : 'center'
+            }}
+          >
+            <form onSubmit={handleSubmit}
+              style=
+              {{
+                display : 'flex',
+                flexDirection : 'column',
+                gap : '2rem',
+                textAlign : 'center'
+              }}
+            >
+              
+              <h1>Login Page</h1>
+  
+              <TextField
+                label="Email"
+                onBlur={handleblur}
+                onChange={handleChange}
+                value={values.email}
+                name="email"
+                error = {Boolean(touched.email) && Boolean(errors.email)}
+                helperText={touched.email && errors.email}
+              />
+  
+              <TextField
+                label="Password"
+                type='password'
+                onBlur={handleblur}
+                onChange={handleChange}
+                value={values.password}
+                name="password"
+                error = {Boolean(touched.password) && Boolean(errors.password)}
+                helperText={touched.password && errors.password}
+              />
+  
+  
+              {/* Buttons */}
+              <Box>
+                <Button
+                  type='submit'
+                >
+                  Login
+                </Button>
+  
+                <Typography 
+                  onClick = {() => navigate('/register')}
+                  sx=
+                  {{
+                    cursor : 'pointer'
+                  }}
+                >
+                  Don't have an account? Sign Up here.
+                </Typography>
+                
+              </Box>
+  
+            </form>
+          </div>
+        )
+      }
+
+    </Formik>
   )
 }
 
