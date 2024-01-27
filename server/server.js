@@ -17,8 +17,10 @@ import '../server/config/db.js';
 
 // Accessing Route Files
 import authRouter from './routes/authRoutes.js';
+import transactionRouter from './routes/transactionRoutes.js';
 
 app.use('/auth', authRouter);
+app.use('/transactions',transactionRouter);
 
 const PORT = process.env.PORT;
 
