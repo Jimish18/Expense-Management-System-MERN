@@ -2,6 +2,7 @@ import React from 'react'
 import Sidebar from '../components/Sidebar/Sidebar'
 import Balance from '../components/Balance/Balance'
 import AddTransaction from '../components/AddTransaction/AddTransaction'
+import Transactions from '../components/Transactions'
 
 const HomePage = () => {
   return (
@@ -15,7 +16,7 @@ const HomePage = () => {
         {{
           display:'flex',
           flexDirection:'column',
-          justifyContent:'space-between',
+          justifyContent:'center',
           width : '100%',
           height : '100vh'
         }}
@@ -33,6 +34,8 @@ const HomePage = () => {
             <Balance/>
             <AddTransaction/>
           </div>
+
+        <Transactions type='recent'/>
       </div>
 
     </div>

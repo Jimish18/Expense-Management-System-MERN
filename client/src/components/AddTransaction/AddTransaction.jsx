@@ -28,9 +28,22 @@ const AddTransaction = () => {
 
     const [transactionType , setTransactionType] = useState(true);
 
-    const handleFormSubmit = async (values , onSubitProps) =>
+    const handleFormSubmit = async (values , onSubmitProps) =>
     {
+        values = {...values , type : transactionType ? 'expense' : 'income'};
+        
+        const newTransaction = await fetch(
+            'http://localhost:8080/transactions/create',
+            {
+                method :"POST",
+                headers : {"Content-Type" : "application/json"},
+                body : JSON.stringify(values)
+            }
+        )
 
+        const savedTransaction = await newTransaction.json();
+
+        onSubmitProps.resetForm();
     }
     
   return (

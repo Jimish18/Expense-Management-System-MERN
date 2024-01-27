@@ -5,13 +5,13 @@ export const getAllTransactionsController = async (req,res) =>
 {
     try
     {
-        const allTransaction = await Transaction.find().sort({createdAt : -1});
+        const allTransactions = await Transaction.find().sort({createdAt : -1});
 
 
         res.status(200).json(
             {
                 success : true,
-                allTransaction
+                allTransactions
             }
         )
     }
@@ -31,13 +31,13 @@ export const getRecentTransactionsController = async (req,res) =>
 {
     try
     {
-        const recentTransaction = await Transaction.find().sort({createdAt : -1}).limit(5);
+        const recentTransactions = await Transaction.find().sort({createdAt : -1}).limit(5);
 
 
         res.status(200).json(
             {
                 success : true,
-                recentTransaction
+                recentTransactions
             }
         )
     }
