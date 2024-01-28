@@ -3,8 +3,11 @@ import Sidebar from '../components/Sidebar/Sidebar'
 import Balance from '../components/Balance/Balance'
 import AddTransaction from '../components/AddTransaction/AddTransaction'
 import Transactions from '../components/Transactions'
+import { useMediaQuery } from '@mui/material'
 
 const HomePage = () => {
+
+  const isNonMobileScreens = useMediaQuery("(min-width : 940px)");
   return (
     <div style={{display:'flex',width:'100vw'}}>
 
