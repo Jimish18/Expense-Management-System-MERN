@@ -9,12 +9,12 @@ export const getAllTransactionsController = async (req,res) =>
     try
     {
         const allTransactions = await User.findById({_id:id},{transactions:1}).populate({path:'transactions',model:'transactions'}).sort({createdAt:-1});
-
+        const orderedAllTransactions = allTransactions.transactions.reverse();
 
         res.status(200).json(
             {
                 success : true,
-                allTransactions
+                orderedAllTransactions
             }
         )
     }
@@ -29,31 +29,6 @@ export const getAllTransactionsController = async (req,res) =>
     }
 }
 
-// get recent Transacations
-// export const getRecentTransactionsController = async (req,res) =>
-// {
-//     try
-//     {
-//         const recentTransactions = await Transaction.find().sort({createdAt : -1}).limit(5);
-
-
-//         res.status(200).json(
-//             {
-//                 success : true,
-//                 recentTransactions
-//             }
-//         )
-//     }
-//     catch(error)
-//     {
-//         res.status(404).json(
-//             {
-//                 success : false,
-//                 message : error.message
-//             }
-//         )
-//     }
-// }
 
 // Create a Transaction
 export const createTransactionController = async (req,res) =>
@@ -109,14 +84,24 @@ export const deleteTransactionController = async (req,res) =>
 {
     try
     {
-        const { id } = req.params;
+        const { uid , pid} = req.params;
         
-        const deletedTransaction = await Transaction.findByIdAndDelete({_id : id});
+        const deletedTransaction = await User.findById({_id:uid}).populate({path:'transactions',model:'transactions'});
+
+        let updatedTransactions = deletedTransaction.transactions.filter((tr) =>
+        {
+            return tr._id != pid;
+        })
+
+        const savedTransaction = await User.findByIdAndUpdate({_id:uid},
+            {
+                transactions : updatedTransactions
+            },{new : true});
 
         res.status(200).json(
             {
                 success : true,
-                deletedTransaction
+                savedTransaction
             }
         )
     }

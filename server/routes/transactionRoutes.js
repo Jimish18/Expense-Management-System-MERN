@@ -13,12 +13,11 @@ const transactionRouter = express.Router();
 
 // GET - get all transactions
 transactionRouter.get('/all/:id',getAllTransactionsController);
-// transactionRouter.get('/recent',getRecentTransactionsController);
 
 // POST - create a Transaction
 transactionRouter.post('/create/:id',createTransactionController);
 
 // DELETE - delete a Transacation
-transactionRouter.delete('/delete/:id',deleteTransactionController);
+transactionRouter.delete('/delete/:uid/:pid',deleteTransactionController);
 
 export default transactionRouter;
