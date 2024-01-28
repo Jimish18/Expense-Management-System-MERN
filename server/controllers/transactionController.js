@@ -1,11 +1,14 @@
+import { User } from "../models/UserModel.js";
 import { Transaction } from "../models/TransactionModel.js";
+import mongoose from "mongoose";
 
 // Get All Transactions
 export const getAllTransactionsController = async (req,res) =>
 {
+    const {id} = req.params;
     try
     {
-        const allTransactions = await Transaction.find().sort({createdAt : -1});
+        const allTransactions = await User.findById({_id:id},{transactions:1}).populate({path:'transactions',model:'transactions'}).sort({createdAt:-1});
 
 
         res.status(200).json(
@@ -27,34 +30,35 @@ export const getAllTransactionsController = async (req,res) =>
 }
 
 // get recent Transacations
-export const getRecentTransactionsController = async (req,res) =>
-{
-    try
-    {
-        const recentTransactions = await Transaction.find().sort({createdAt : -1}).limit(5);
+// export const getRecentTransactionsController = async (req,res) =>
+// {
+//     try
+//     {
+//         const recentTransactions = await Transaction.find().sort({createdAt : -1}).limit(5);
 
 
-        res.status(200).json(
-            {
-                success : true,
-                recentTransactions
-            }
-        )
-    }
-    catch(error)
-    {
-        res.status(404).json(
-            {
-                success : false,
-                message : error.message
-            }
-        )
-    }
-}
+//         res.status(200).json(
+//             {
+//                 success : true,
+//                 recentTransactions
+//             }
+//         )
+//     }
+//     catch(error)
+//     {
+//         res.status(404).json(
+//             {
+//                 success : false,
+//                 message : error.message
+//             }
+//         )
+//     }
+// }
 
 // Create a Transaction
 export const createTransactionController = async (req,res) =>
 {
+    const {id} = req.params;
     try
     {
         const {type , amount , description } = req.body;
@@ -68,6 +72,19 @@ export const createTransactionController = async (req,res) =>
         );
 
         const savedTransaction = await newTransaction.save();
+
+        let objId =  new mongoose.Types.ObjectId(savedTransaction._id);        
+
+        const updateTransaction = await User.findByIdAndUpdate(
+            {_id:id},
+            {
+                $push :
+                {
+                    transactions :objId 
+                }
+            },
+            {upsert:false,new:true}
+        )
 
         res.status(200).json(
             {

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 // Schema Design
 const UserSchema = new mongoose.Schema(
@@ -23,7 +23,8 @@ const UserSchema = new mongoose.Schema(
         {
             type : String,
             required : [true,"Profession is required"]
-        }
+        },
+        transactions:[{type:Schema.Types.ObjectId,ref:'transactions'}]
 
     },
     {timestamps : true}

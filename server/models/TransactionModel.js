@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 const TransactionSchema = new mongoose.Schema(
     {
@@ -24,4 +24,4 @@ const TransactionSchema = new mongoose.Schema(
     }
 )
 
-export const Transaction = mongoose.model('transaction',TransactionSchema);
+export const Transaction = mongoose.model('transactions',TransactionSchema);

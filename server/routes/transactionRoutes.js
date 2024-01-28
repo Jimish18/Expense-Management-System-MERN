@@ -3,8 +3,7 @@ import
 { 
     createTransactionController, 
     deleteTransactionController, 
-    getAllTransactionsController, 
-    getRecentTransactionsController
+    getAllTransactionsController
 } from '../controllers/transactionController.js';
 
 const transactionRouter = express.Router();
@@ -13,11 +12,11 @@ const transactionRouter = express.Router();
 // Routes
 
 // GET - get all transactions
-transactionRouter.get('/all',getAllTransactionsController);
-transactionRouter.get('/recent',getRecentTransactionsController);
+transactionRouter.get('/all/:id',getAllTransactionsController);
+// transactionRouter.get('/recent',getRecentTransactionsController);
 
 // POST - create a Transaction
-transactionRouter.post('/create',createTransactionController);
+transactionRouter.post('/create/:id',createTransactionController);
 
 // DELETE - delete a Transacation
 transactionRouter.delete('/delete/:id',deleteTransactionController);
