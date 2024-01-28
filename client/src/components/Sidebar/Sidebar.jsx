@@ -13,20 +13,36 @@ import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import '../Sidebar/Sidebar.css'
 import { useNavigate } from 'react-router-dom';
 import { TransactionContext } from '../../context/TransactionContext';
+import { UserContext } from '../../context/UserContext';
 
 
 const Sidebar = () => {
 
     const navigate = useNavigate();
-    const transactionContext = useContext(TransactionContext)
+    const transactionContext = useContext(TransactionContext);
+    const userContext = useContext(UserContext);
+
+    const handleLogOut = () =>
+    {
+        userContext.setAuth(
+            {
+                ...userContext.auth,
+                user:null,
+                token:''
+            }
+        );
+
+        localStorage.removeItem('auth');
+    }
+
   return (
     <div className='primaryNav'>
 
 
         <div className='secondaryNav'>
             <div className="profile">
-                <h2>Jimish Prajapati</h2>
-                <h6>Student</h6>
+                <h2>{userContext.auth.user.name}</h2>
+                <h6>{userContext.auth.user.profession}</h6>
             </div>
 
             <div className="budget">
@@ -87,8 +103,9 @@ const Sidebar = () => {
 
         <div>
             <List>
-                <ListItemButton>
+                <ListItemButton onClick={handleLogOut}>
                     <ListItemIcon
+                        
                         sx=
                         {{
                             display:'flex',
@@ -96,7 +113,7 @@ const Sidebar = () => {
                             justifyContent:'center'
                         }} 
                     >
-                        <LogoutIcon />
+                        <LogoutIcon/>
                     </ListItemIcon>
                     <ListItemText primary="Logout" />
                 </ListItemButton>            

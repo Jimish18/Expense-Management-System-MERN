@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import * as yup from "yup";
 import 
 {
@@ -10,6 +10,7 @@ import
 } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
+import { UserContext } from '../context/UserContext';
 
 
 const loginSchema = yup.object().shape(
@@ -28,6 +29,8 @@ const initialValueLogin =
 const LoginPage = () => 
 {
   const navigate = useNavigate();
+  const userContext = useContext(UserContext);
+  
 
   const handleFormSubmit = async (values , onSubitProps) =>
   {
@@ -40,11 +43,26 @@ const LoginPage = () =>
       }
     );
 
-    const savedUser = await savedUserResponse.json();
+    const savedUser = await savedUserResponse.json();    
+
+    if(savedUser.success)
+    {
+      userContext.setAuth(
+        {
+          ...userContext.auth,
+          user:savedUser.user,
+          token:savedUser.token
+        }
+      )
+
+      localStorage.setItem('auth',JSON.stringify(savedUser));
+    }
 
     navigate('/');
     onSubitProps.resetForm();
   }
+  
+  
 
   return (
     <Formik
