@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import '../Balance/Balance.css';
 import rupay from '../Balance/Rupay.png';
 import { TransactionContext } from '../../context/TransactionContext';
+import { UserContext } from '../../context/UserContext';
 
 const Balance = () => {
 
     const transactionContext = useContext(TransactionContext);
+    const userContext = useContext(UserContext);
 
 
   return (
@@ -20,7 +22,7 @@ const Balance = () => {
         }}    
     >
         <div><p>Available Balance</p></div>
-        <div><h1>₹ {transactionContext.income - transactionContext.expense}</h1></div>
+        <div><h1>{transactionContext.income - transactionContext.expense} ₹</h1></div>
         <div
             style=
             {{
@@ -30,7 +32,7 @@ const Balance = () => {
         >
             <div>
                 <h3>**** **** 1234 5678</h3>
-                <h4>JIMISH PRAJAPATI</h4>
+                <h4>{userContext.auth.user.name.toUpperCase()}</h4>
             </div>
             <div>
                 <img src={rupay} alt="Rupay Icon" height='55rem'/>

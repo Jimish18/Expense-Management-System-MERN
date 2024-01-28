@@ -33,6 +33,7 @@ const Sidebar = () => {
         );
 
         localStorage.removeItem('auth');
+        
     }
 
   return (

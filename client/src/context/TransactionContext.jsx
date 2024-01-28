@@ -8,10 +8,16 @@ export const TransactionContextProvider = ({children}) =>
     const [income,setIncome] = useState(0);
     const [expense,setExpense] = useState(0);
 
+    
+    // const userContext = useContext(UserContext);
+
+    
+
     const getAllTransactions = async () =>
     {
+        let uid = JSON.parse(localStorage.getItem('auth'))?.user?._id;
         const data = await fetch(
-            `http://localhost:8080/transactions/all`,
+            `http://localhost:8080/transactions/all/${uid}`,
             {
               method : "GET"
             }
@@ -19,40 +25,31 @@ export const TransactionContextProvider = ({children}) =>
 
         const fetchedData = await data.json();
 
-        setAllTransactions(fetchedData.allTransactions);        
+        if(fetchedData.success)
+        {
+            setAllTransactions(fetchedData.orderedAllTransactions);
+
+            let expenseAmount = 0;
+            let incomeAmount = 0;
+
+            fetchedData.orderedAllTransactions.forEach((tr) =>
+            {
+                if(tr.type == 'expense') expenseAmount += tr.amount;
+                else incomeAmount += tr.amount;
+            })
+
+            setIncome(incomeAmount);
+            setExpense(expenseAmount);
+        }        
         
     }   
 
-    const getExpenseAndIncome = () =>
-    {
-        let incomeAmount = 0;
-        let expenseAmount = 0;
-
-        allTransactions.forEach(
-            (item)=>
-            {
-                if(item.type == 'expense') expenseAmount += item.amount;
-                else incomeAmount += item.amount;
-            }
-        );
-
-        setIncome(incomeAmount);
-        setExpense(expenseAmount);
-    }
-
+    
     useEffect(()=>
     {
-        getAllTransactions();           
+        getAllTransactions();  
         
     },[])
-
-    useEffect(()=>
-    {
-        getExpenseAndIncome();
-    },[getAllTransactions])
-
-
-
 
     return (
         <TransactionContext.Provider value={{allTransactions , setAllTransactions , getAllTransactions,income,expense,setIncome,setExpense}}>

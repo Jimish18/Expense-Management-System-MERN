@@ -8,10 +8,12 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TransactionContext } from '../context/TransactionContext';
+import { UserContext } from '../context/UserContext';
 
 const Transactions = ({type}) => {
 
   const transactionContext = useContext(TransactionContext);
+  const userContext = useContext(UserContext);
 
   let transactions = type === 'recent' ? transactionContext.allTransactions.slice(0,5) : transactionContext.allTransactions;
     
@@ -46,7 +48,7 @@ const Transactions = ({type}) => {
                     async () =>
                     {
                       const deletedTransaction = await fetch(
-                        `http://localhost:8080/transactions/delete/${transaction._id}`,
+                        `http://localhost:8080/transactions/delete/${userContext.auth.user._id}/${transaction._id}`,
                         {
                             method : "DELETE"
                         }

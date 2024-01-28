@@ -29,13 +29,14 @@ const AddTransaction = () => {
 
     const [transactionType , setTransactionType] = useState(true);
     const transactionContext = useContext(TransactionContext);
+    let uid = JSON.parse(localStorage.getItem('auth')).user._id;
 
     const handleFormSubmit = async (values , onSubmitProps) =>
     {
         values = {...values , type : transactionType ? 'expense' : 'income'};
         
         const newTransaction = await fetch(
-            'http://localhost:8080/transactions/create',
+            `http://localhost:8080/transactions/create/${uid}`,
             {
                 method :"POST",
                 headers : {"Content-Type" : "application/json"},

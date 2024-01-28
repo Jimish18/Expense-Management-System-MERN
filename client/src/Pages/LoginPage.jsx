@@ -59,6 +59,7 @@ const LoginPage = () =>
     }
 
     navigate('/');
+    window.location.reload();
     onSubitProps.resetForm();
   }
   
