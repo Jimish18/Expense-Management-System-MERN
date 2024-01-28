@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../Balance/Balance.css';
 import rupay from '../Balance/Rupay.png';
+import { TransactionContext } from '../../context/TransactionContext';
 
 const Balance = () => {
+
+    const transactionContext = useContext(TransactionContext);
+
+
   return (
     <div 
         className='debitCard'
@@ -15,7 +20,7 @@ const Balance = () => {
         }}    
     >
         <div><p>Available Balance</p></div>
-        <div><h1>$ 123456</h1></div>
+        <div><h1>₹ {transactionContext.income - transactionContext.expense}</h1></div>
         <div
             style=
             {{

@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React , {useState,useContext} from 'react';
 import '../AddTransaction/AddTransaction.css';
 import * as yup from "yup";
 import 
@@ -10,6 +10,7 @@ import
   Typography
 } from "@mui/material";
 import { Formik } from 'formik';
+import { TransactionContext } from '../../context/TransactionContext';
 
 const TransactionSchema = yup.object().shape(
     {
@@ -27,6 +28,7 @@ const initialValueTransaction =
 const AddTransaction = () => {
 
     const [transactionType , setTransactionType] = useState(true);
+    const transactionContext = useContext(TransactionContext);
 
     const handleFormSubmit = async (values , onSubmitProps) =>
     {
@@ -43,8 +45,12 @@ const AddTransaction = () => {
 
         const savedTransaction = await newTransaction.json();
 
+        transactionContext.getAllTransactions();
         onSubmitProps.resetForm();
     }
+
+    
+
     
   return (
     <div className='addTransactionContainer'>

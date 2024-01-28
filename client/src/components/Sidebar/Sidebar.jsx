@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -8,13 +8,17 @@ import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import LogoutIcon from '@mui/icons-material/Logout';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import '../Sidebar/Sidebar.css'
 import { useNavigate } from 'react-router-dom';
+import { TransactionContext } from '../../context/TransactionContext';
 
 
 const Sidebar = () => {
 
     const navigate = useNavigate();
+    const transactionContext = useContext(TransactionContext)
   return (
     <div className='primaryNav'>
 
@@ -26,8 +30,20 @@ const Sidebar = () => {
             </div>
 
             <div className="budget">
-                <h5>Budget for this Month</h5>
-                <h3>125463$</h3>
+                <div>
+                    <div>
+                        <TrendingUpIcon sx={{color : 'green'}}/>
+                        <p>Income</p>
+                    </div>
+                    <h4>{transactionContext.income} ₹</h4>
+                </div>
+                <div>
+                    <div>
+                        <TrendingDownIcon sx={{color : 'red'}}/>
+                        <p>Expense</p>
+                    </div>
+                    <h4>{transactionContext.expense} ₹</h4>
+                </div>
             </div>
 
             <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'transparent' }}>
