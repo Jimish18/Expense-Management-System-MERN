@@ -21,8 +21,8 @@ import '../server/config/db.js';
 import authRouter from './routes/authRoutes.js';
 import transactionRouter from './routes/transactionRoutes.js';
 
-app.use('/auth', authRouter);
-app.use('/transactions',transactionRouter);
+app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/transactions',transactionRouter);
 
 
 // static files read
