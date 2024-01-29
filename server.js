@@ -1,7 +1,8 @@
 import express from 'express';
 const app = express();
 
-import path from 'path';
+import { fileURLToPath } from 'url';
+import {dirname} from 'path';
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -26,6 +27,8 @@ app.use('/api/v1/transactions',transactionRouter);
 
 
 // static files read
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 app.use(express.static(path.join(__dirname,'./client/build')));
 app.get('*', (req,res) =>
 {
