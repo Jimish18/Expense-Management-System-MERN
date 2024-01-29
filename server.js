@@ -2,7 +2,7 @@ import express from 'express';
 const app = express();
 
 import { fileURLToPath } from 'url';
-import {dirname} from 'path';
+import * as path from 'path';
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -28,14 +28,14 @@ app.use('/api/v1/transactions',transactionRouter);
 
 // static files read
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname,'./client/build')));
 app.get('*', (req,res) =>
 {
     res.sendFile(path.join(__dirname,'./client/build/index.html'));
 });
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT , () =>
 {
