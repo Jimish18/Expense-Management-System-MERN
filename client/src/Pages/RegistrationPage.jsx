@@ -5,7 +5,6 @@ import
   Box,
   Button,
   TextField,
-  useMediaQuery,
   Typography
 } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
@@ -40,7 +39,7 @@ const RegistrationPage = () => {
     
 
     const savedUserResponse = await fetch(
-      'http://localhost:8080/auth/register',
+      '/auth/register',
       {
         method : "POST",
         headers : {"Content-Type" : "application/json"},
@@ -81,7 +80,8 @@ const RegistrationPage = () => {
               width : '100vw',
               display : 'flex',
               alignItems : 'center',
-              justifyContent : 'center'
+              justifyContent : 'center',
+              padding:'0 0.5rem'
             }}
           >
             <form onSubmit={handleSubmit}

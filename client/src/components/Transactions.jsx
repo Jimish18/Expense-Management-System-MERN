@@ -9,17 +9,19 @@ import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TransactionContext } from '../context/TransactionContext';
 import { UserContext } from '../context/UserContext';
+import { useMediaQuery } from '@mui/material';
 
 const Transactions = ({type}) => {
 
   const transactionContext = useContext(TransactionContext);
   const userContext = useContext(UserContext);
+  const SmallScreens = useMediaQuery("(min-width : 410px)");
 
   let transactions = type === 'recent' ? transactionContext.allTransactions.slice(0,5) : transactionContext.allTransactions;
     
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer component={Paper} >
+      <Table  aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Transaction Name</TableCell>
@@ -41,29 +43,32 @@ const Transactions = ({type}) => {
               <TableCell align="center" sx={{color : transaction.type === 'expense' ? 'red' : 'green'}}>{transaction.amount} ₹</TableCell>
               <TableCell align="center">{transaction.createdAt.substr(0,10)}</TableCell>
               <TableCell align="center">{transaction.createdAt.substr(11,8)}</TableCell>
-              <TableCell align="center">
-                <DeleteIcon
-                  sx={{cursor:'pointer'}}
-                  onClick = {
-                    async () =>
-                    {
-                      const deletedTransaction = await fetch(
-                        `http://localhost:8080/transactions/delete/${userContext.auth.user._id}/${transaction._id}`,
-                        {
-                            method : "DELETE"
-                        }
-                      )  ;
+              {
+                SmallScreens && 
+                <TableCell align="center">
+                  <DeleteIcon
+                    sx={{cursor:'pointer'}}
+                    onClick = {
+                      async () =>
+                      {
+                        const deletedTransaction = await fetch(
+                          `/transactions/delete/${userContext.auth.user._id}/${transaction._id}`,
+                          {
+                              method : "DELETE"
+                          }
+                        )  ;
 
-                      const data = await deletedTransaction.json();
+                        const data = await deletedTransaction.json();
 
-                      transactionContext.getAllTransactions();
+                        transactionContext.getAllTransactions();
 
-                      transactions = transactionContext.allTransactions;
+                        transactions = transactionContext.allTransactions;
 
+                      }
                     }
-                  }
-                />
+                  />
               </TableCell>
+              }
             </TableRow>
           ))}
         </TableBody>

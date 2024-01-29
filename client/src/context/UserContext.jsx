@@ -27,7 +27,7 @@ export const UserContextProvider = ({children}) =>
                 }
             )
         }
-    },[])
+    },[]) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <UserContext.Provider value={{auth,setAuth}}>

@@ -6,8 +6,7 @@ import
   Box,
   Button,
   TextField,
-  useMediaQuery,
-  Typography
+  useMediaQuery
 } from "@mui/material";
 import { Formik } from 'formik';
 import { TransactionContext } from '../../context/TransactionContext';
@@ -30,13 +29,14 @@ const AddTransaction = () => {
     const [transactionType , setTransactionType] = useState(true);
     const transactionContext = useContext(TransactionContext);
     let uid = JSON.parse(localStorage.getItem('auth')).user._id;
+    const SmallScreens = useMediaQuery("(min-width : 700px)");
 
     const handleFormSubmit = async (values , onSubmitProps) =>
     {
         values = {...values , type : transactionType ? 'expense' : 'income'};
         
         const newTransaction = await fetch(
-            `http://localhost:8080/transactions/create/${uid}`,
+            `/transactions/create/${uid}`,
             {
                 method :"POST",
                 headers : {"Content-Type" : "application/json"},
@@ -54,7 +54,13 @@ const AddTransaction = () => {
 
     
   return (
-    <div className='addTransactionContainer'>
+    <div 
+        className='addTransactionContainer'
+        style=
+        {{
+            width : !SmallScreens ? '18rem' : '40%'
+        }}
+    >
         <h3>Add Transaction</h3>
         <div className="transactionType">
             <div onClick={()=>setTransactionType(true)}>

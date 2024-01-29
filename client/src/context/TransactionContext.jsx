@@ -17,7 +17,7 @@ export const TransactionContextProvider = ({children}) =>
     {
         let uid = JSON.parse(localStorage.getItem('auth'))?.user?._id;
         const data = await fetch(
-            `http://localhost:8080/transactions/all/${uid}`,
+            `/transactions/all/${uid}`,
             {
               method : "GET"
             }

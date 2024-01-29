@@ -1,11 +1,10 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import * as yup from "yup";
 import 
 {
   Box,
   Button,
   TextField,
-  useMediaQuery,
   Typography
 } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
@@ -35,7 +34,7 @@ const LoginPage = () =>
   const handleFormSubmit = async (values , onSubitProps) =>
   {
     const savedUserResponse = await fetch(
-      'http://localhost:8080/auth/login',
+      '/auth/login',
       {
         method : "POST",
         headers : {"Content-Type" : "application/json"},
@@ -89,7 +88,8 @@ const LoginPage = () =>
               width : '100vw',
               display : 'flex',
               alignItems : 'center',
-              justifyContent : 'center'
+              justifyContent : 'center',
+              padding:'0 0.5rem'
             }}
           >
             <form onSubmit={handleSubmit}
