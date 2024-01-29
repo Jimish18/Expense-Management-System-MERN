@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // database Connection 
-import '../server/config/db.js';
+import "./config/db.js"
 
 // Accessing Route Files
 import authRouter from './routes/authRoutes.js';
