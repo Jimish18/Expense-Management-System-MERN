@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.d939862e.css",
-    "main.js": "/static/js/main.9ef36615.js",
+    "main.js": "/static/js/main.c67a57ac.js",
     "static/media/Rupay.png": "/static/media/Rupay.f635d7200120289358cc.png",
     "index.html": "/index.html",
     "main.d939862e.css.map": "/static/css/main.d939862e.css.map",
-    "main.9ef36615.js.map": "/static/js/main.9ef36615.js.map"
+    "main.c67a57ac.js.map": "/static/js/main.c67a57ac.js.map"
   },
   "entrypoints": [
     "static/css/main.d939862e.css",
-    "static/js/main.9ef36615.js"
+    "static/js/main.c67a57ac.js"
   ]
 }
